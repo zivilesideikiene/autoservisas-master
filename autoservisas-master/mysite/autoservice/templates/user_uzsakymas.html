@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mano užsakymas</h1>
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2">{{ object.klientas_id }}</a>
+              <small class="text-muted">{{ object.grazinimo_laikas|date:"Y-m-d, f" }}</small>
+            </div>
+            <p class="article-content">{{ object.automobilis_id}}</p>
+            <p><strong>Suma:</strong> {{ object.suma }}</p>
+            <div style="margin-left:20px;margin-top:20px">
+            {% if object.eilutes.all %}
+            <h4>Darbai:</h4>
+            {% for eilute in uzsakymas.eilutes.all %}
+              <hr>
+                <p><strong>Paslauga:</strong> {{ eilute.paslauga_id }}  <strong>Kiekis:</strong> {{ eilute.kiekis }}<strong>    Kaina:</strong> {{ eilute.kaina }} <strong>    Suma:</strong> {{ eilute.suma }}</p>
+            {% endfor %}
+            {% endif %}
+            </div>
+            </br>
+            {% if object.klientas_id == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'redaguoti-mano-uzsakyma' object.id %}">Redaguoti</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'istrinti-mano-uzsakyma' object.id %}">Ištrinti</a>
+            </div>
+            {% endif %}
+          </div>
+        </article>
+{% endblock %}

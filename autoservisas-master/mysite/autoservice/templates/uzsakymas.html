@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+    <p><strong>Automobilis:</strong> {{ uzsakymas.automobilis_id }}</p>
+    <p><strong>Suma:</strong> {{ uzsakymas.suma }}</p>
+    <h6 class="card-subtitle mb-2 text-muted">{{ uzsakymas.get_status_display }}</h6>
+    </hr>
+    </br>
+    </div>
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Darbai:</h4>
+    {% for eilute in uzsakymas.eilutes.all %}
+      <hr>
+        <p><strong>Paslauga:</strong> {{ eilute.paslauga_id }}  <strong>Kiekis:</strong> {{ eilute.kiekis }}<strong>    Kaina:</strong> {{ eilute.kaina }} <strong>    Suma:</strong> {{ eilute.suma }}</p>
+    {% endfor %}
+  </div>
+
+</br>
+  <h4>Komentarai:</h4>
+  {% if uzsakymas.uzsakymokomentaras_set.all %}
+    {% for komentaras in uzsakymas.uzsakymokomentaras_set.all %}
+      <hr>
+      <strong>{{ komentaras.klientas_id }}</strong>, <em>{{ komentaras.date_created}}</em>
+      <p>{{ komentaras.komentaras }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Užsakymas neturi komentarų</p>
+  {% endif %}
+
+{% endblock %}
